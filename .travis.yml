@@ -1,0 +1,16 @@
+sudo: required
+services:
+  - docker
+
+before_install: 
+  - docker build -t exodiums/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  # this is the command to run the test if any test fails return 1 other than 0  and travis will fail
+  - docker run -e CI=true exodiums/react-test npm run test
+
+after_success:
+- docker build -t exodiums/multi-client ./client
+- docker build -t exodiums/multi-nginx ./nginx
+- docker build -t exodiums/multi-server ./server
+- docker build -t exodiums/multi-worker ./worker
