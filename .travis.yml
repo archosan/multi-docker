@@ -14,3 +14,10 @@ after_success:
 - docker build -t exodiums/multi-nginx ./nginx
 - docker build -t exodiums/multi-server ./server
 - docker build -t exodiums/multi-worker ./worker
+# Log in to the docker CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# take thoose images and push thme to docker hub
+- docker push exodiums/multi-client
+- docker push exodiums/multi-nginx
+- docker push exodiums/multi-server
+- docker push exodiums/multi-worker
